@@ -29,12 +29,14 @@ namespace TicTac
 
 		// Create board 
 		public int [,] Create(){  
+			int count = 1; 
 
 			for(int r = 0; r < ROW; r++) { 
 				for(int c = 0; c < COL; c++) { 
-					Board[r,c] = 0; 
+					Board[r,c] = count++; 
 				} 
 			} 
+
 			
 			return Board; 
 		} 
@@ -43,7 +45,7 @@ namespace TicTac
 		{ 
 			for(int r = 0; r < ROW; r++) { 
 				for(int c = 0 ; c < COL; c++) { 
-					Console.WriteLine($"{Board[r,c]}"); 
+					Console.Write($"{Board[r,c]} \t "); 
 				} 
 				Console.WriteLine("\n"); 
 			} 
@@ -67,6 +69,7 @@ namespace TicTac
 		{
 
 			this._name = nm; 
+			Builder(); // adds to dictionary int position and array of row and column 
 		} 
 
 		public void Builder()
@@ -87,13 +90,20 @@ namespace TicTac
 
 		public void UpdateBoard(int position, Plyr p)
 		{ 
+			movesPlayed.Add(position); 
 			Conversion(position); 
 			
 			Print(); 
 		} 
 
 		public void Conversion(int ps){
-			ChangeNumTo2D[ps]; 
+			int row = 0; 
+			int col = 0; 
+		
+			row = ChangeNumTo2D[ps][0]; 
+			col = ChangeNumTo2D[ps][1]; 
+			
+			Console.WriteLine("Line After convertion row = {0} col = {1}", row, col); 
 			
 		} 	
 		public bool IsWinner() 

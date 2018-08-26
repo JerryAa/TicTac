@@ -16,9 +16,7 @@ namespace TicTac
 			string name_p2 = Console.ReadLine(); 
 			
 			Player p2 = new Player(name_p2); 
-			p2.Create(); 
-			Console.WriteLine("\n"); 
-			p2.Print(); 
+			//p2.Add(3); 
 				
         }
     }
