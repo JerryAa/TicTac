@@ -10,12 +10,11 @@ namespace TicTac
 
 	}; 
 
-	public interface Status 
+	interface Status 
 	{ 
 
 		// signatures of game state methods 
-		public bool IsWinner(); 
-		public 
+		bool IsWinner(); 
 
 	} 
 	public abstract class Game 
@@ -25,11 +24,18 @@ namespace TicTac
 
 	} 
 
-	public class Player : Game 
+	public class Player : Game, Status 
 	{ 
 		// player data ie, name, x or o, etc
 
 		private string _name; 
+
+
+		public Player() 
+		{
+
+		} 
+
 		public string Name 
 		{ 
 			get 	
@@ -43,6 +49,12 @@ namespace TicTac
 				_name = value; 	
 
 			} 
+		} 
+		
+		public bool IsWinner() 
+		{ 
+
+			return false; 
 		} 
 	
 	} 
