@@ -31,25 +31,12 @@ namespace TicTac
 		private string _name; 
 
 
-		public Player() 
+		public Player(string nm) 
 		{
 
+			this._name = nm; 
 		} 
 
-		public string Name 
-		{ 
-			get 	
-			{ 
-
-				return this._name; 
-			} 
-
-			set
-			{ 
-				_name = value; 	
-
-			} 
-		} 
 		
 		public bool IsWinner() 
 		{ 
