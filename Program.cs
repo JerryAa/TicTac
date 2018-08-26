@@ -10,11 +10,13 @@ namespace TicTac
 
 			string name_p1 = Console.ReadLine(); 
 			Player p1 = new Player(name_p1); 
+			p1.movesPlayed.Add(3); 
 			
 			Console.WriteLine("Enter name for Player 2:"); 
 			string name_p2 = Console.ReadLine(); 
 			
 			Player p2 = new Player(name_p2); 
+			//p2.Add(3); 
 				
         }
     }
