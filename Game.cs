@@ -41,9 +41,13 @@ namespace TicTac
 
 		public void Print() 
 		{ 
-			foreach(var x in Board){ 
-				Console.WriteLine(x); 
+			for(int r = 0; r < ROW; r++) { 
+				for(int c = 0 ; c < COL; c++) { 
+					Console.WriteLine($"{Board[r,c]}"); 
+				} 
+				Console.WriteLine("\n"); 
 			} 
+		
 		} 
 		
 
@@ -68,10 +72,14 @@ namespace TicTac
 		public void Builder()
 		{ 
 			int count = 0; 
+			int [] arr = new int[2]; 
 
 			for(int r = 0; r < ROW; r++) { 
 				for(int c = 0 ; c < COL; c++) { 
-					// ChangeNumTo2D.Add(count, [r,c]); 
+					arr[0] = r; 
+					arr[1] = c; 
+
+					ChangeNumTo2D.Add(count, arr); 
 					count  += 1; 
 				} 
 			}  
@@ -85,7 +93,7 @@ namespace TicTac
 		} 
 
 		public void Conversion(int ps){
-			// ChangeNumTo2D.Add(
+			ChangeNumTo2D[ps]; 
 			
 		} 	
 		public bool IsWinner() 
