@@ -1,5 +1,5 @@
 # TicTac
 ## Run 
-* dotnet run*
+* dotnet run *
 
 > Good luck players! 
