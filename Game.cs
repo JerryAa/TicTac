@@ -19,8 +19,34 @@ namespace TicTac
 	} 
 	public abstract class Game 
 	{ 
+		
 
-		// Game methods, fields, etc 
+		// Game methods, fields, board etc 
+		private const int ROW = 3; 
+		private const int COL = 3; 
+	
+		public int [,] Board = new int[ROW, COL]; 
+
+		// Create board 
+		public int [,] Create(){  
+
+			for(int r = 0; r < ROW; r++) { 
+				for(int c = 0; c < COL; c++) { 
+					Board[r,c] = 0; 
+				} 
+			} 
+			
+			return Board; 
+		} 
+
+		public void Print() 
+		{ 
+
+			foreach(var x in Board){ 
+				Console.WriteLine(x); 
+			} 
+		} 
+		
 
 	} 
 
