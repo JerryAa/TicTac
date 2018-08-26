@@ -1,4 +1,5 @@
 using System; 
+using System.Collections.Generic; 
 
 namespace TicTac
 { 
@@ -69,6 +70,8 @@ namespace TicTac
 
 			return false; 
 		} 
+
+		public List<int> movesPlayed = new List<int>(); 
 	
 	} 
 
