@@ -25,15 +25,16 @@ namespace TicTac
 		public const int ROW = 3; 
 		public const int COL = 3; 
 	
-		public int [,] Board = new int[ROW, COL]; 
+		public string[,] Board = new string [ROW, COL]; 
 
 		// Create board 
-		public int [,] Create(){  
+		public string [,] Create(){  
 			int count = 0; 
 
 			for(int r = 0; r < ROW; r++) { 
 				for(int c = 0; c < COL; c++) { 
-					Board[r,c] = count++; 
+					Board[r,c] = count.ToString(); 
+					count += 1; 
 				} 
 			} 
 
@@ -91,29 +92,33 @@ namespace TicTac
 
 		} 
 
-		public void UpdateBoard(int position, Plyr p)
+		public void UpdateBoard(int position)
+		// public void UpdateBoard(int position, Plyr p)
 		{ 
 			movesPlayed.Add(position); 
-			Conversion(position); 
+			int [] location = Conversion(position); 
 			
-			// Board[r,c] = "X"; 
+			Board[location[0], location[1]] = "X"; 
+
 			// Board[r,c] = "O"; 
 			Print(); 
 		} 
 
-		public void Conversion(int pos){
+		public int [] Conversion(int pos){
+			int [] arr = new int[2]; // will return row and col 
 			int row = 0; 
 			int col = 0; 
 		
-			/** 
-			row = ChangeNumTo2D[ps][0]; 
-			col = ChangeNumTo2D[ps][1]; 
-			**/ 
+			row = ChangeNumTo2D[pos][0]; 
+			col = ChangeNumTo2D[pos][1]; 
 
-			foreach(var x in ChangeNumTo2D[pos])  
-					Console.WriteLine(x); 
 
-			//Console.WriteLine("Line After convertion row = {0} col = {1} ", arr[0], arr[1]); 
+			Console.WriteLine("Line After Conversion row = {0} col = {1} ", row, col);  
+			
+			arr[0] = row; 
+			arr[1] = col; 
+
+			return arr; 
 		} 	
 
 		public bool IsWinner() 

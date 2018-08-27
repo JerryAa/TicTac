@@ -6,6 +6,9 @@ namespace TicTac
     {
         static void Main(string[] args)
         {
+			var val = Plyr.player1; 	
+			Console.WriteLine($"{val}"); 
+
 			Console.WriteLine("Enter name for Player 1:"); 
 
 			string name_p1 = Console.ReadLine(); 
@@ -17,11 +20,13 @@ namespace TicTac
 			
 			Player p2 = new Player(name_p2); 
 			p2.Create(); 
+
 			Console.WriteLine("\n"); 
+
 			p2.Print(); 
 			Console.WriteLine("Which position would you like:"); 
 			int pos = Convert.ToInt32(Console.ReadLine()); 
-			p2.Conversion(pos); 
+			p2.UpdateBoard(pos); 
 				
         }
     }
