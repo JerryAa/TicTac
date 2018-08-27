@@ -19,6 +19,9 @@ namespace TicTac
 			p2.Create(); 
 			Console.WriteLine("\n"); 
 			p2.Print(); 
+			Console.WriteLine("Which position would you like:"); 
+			int pos = Convert.ToInt32(Console.ReadLine()); 
+			p2.Conversion(pos); 
 				
         }
     }
