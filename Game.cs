@@ -29,7 +29,7 @@ namespace TicTac
 
 		// Create board 
 		public int [,] Create(){  
-			int count = 1; 
+			int count = 0; 
 
 			for(int r = 0; r < ROW; r++) { 
 				for(int c = 0; c < COL; c++) { 
@@ -61,7 +61,7 @@ namespace TicTac
 
 		private string _name; 
 		public List<int> movesPlayed = new List<int>(); 
-		public Dictionary<int, int [] > ChangeNumTo2D = new Dictionary<int, int [] >(); 
+		public List<List<int> > ChangeNumTo2D = new List<List<int>>(); 
 
 			
 
@@ -74,18 +74,21 @@ namespace TicTac
 
 		public void Builder()
 		{ 
-			int count = 0; 
-			int [] arr = new int[2]; 
+			List<int [] > temp = new List< int [] >(); 
+
+			List<int> arr = new List<int>(3); 	
 
 			for(int r = 0; r < ROW; r++) { 
 				for(int c = 0 ; c < COL; c++) { 
-					arr[0] = r; 
-					arr[1] = c; 
+					arr.Add(r); 	
+					arr.Add(c); 	
+					ChangeNumTo2D.Add(arr); 
+					arr = new List<int>();  //reset 
 
-					ChangeNumTo2D.Add(count, arr); 
-					count  += 1; 
 				} 
 			}  
+			
+
 		} 
 
 		public void UpdateBoard(int position, Plyr p)
@@ -93,19 +96,26 @@ namespace TicTac
 			movesPlayed.Add(position); 
 			Conversion(position); 
 			
+			// Board[r,c] = "X"; 
+			// Board[r,c] = "O"; 
 			Print(); 
 		} 
 
-		public void Conversion(int ps){
+		public void Conversion(int pos){
 			int row = 0; 
 			int col = 0; 
 		
+			/** 
 			row = ChangeNumTo2D[ps][0]; 
 			col = ChangeNumTo2D[ps][1]; 
-			
-			Console.WriteLine("Line After convertion row = {0} col = {1}", row, col); 
-			
+			**/ 
+
+			foreach(var x in ChangeNumTo2D[pos])  
+					Console.WriteLine(x); 
+
+			//Console.WriteLine("Line After convertion row = {0} col = {1} ", arr[0], arr[1]); 
 		} 	
+
 		public bool IsWinner() 
 		{ 
 			return false; 
