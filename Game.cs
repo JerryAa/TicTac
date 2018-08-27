@@ -50,6 +50,7 @@ namespace TicTac
 				} 
 				Console.WriteLine("\n"); 
 			} 
+			Console.WriteLine("\n"); 
 		
 		} 
 		
@@ -113,7 +114,7 @@ namespace TicTac
 			col = ChangeNumTo2D[pos][1]; 
 
 
-			Console.WriteLine("Line After Conversion row = {0} col = {1} ", row, col);  
+			// Console.WriteLine("Line After Conversion row = {0} col = {1} ", row, col);  
 			
 			arr[0] = row; 
 			arr[1] = col; 
