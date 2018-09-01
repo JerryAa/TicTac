@@ -14,7 +14,6 @@ namespace TicTac
 			string name_p1 = Console.ReadLine(); 
 			Player p1 = new Player(name_p1); 
 			p1.Create(); 
-			// p1.movesPlayed.Add(3); 
 			
 			Console.WriteLine("Enter name for Player 2:"); 
 			string name_p2 = Console.ReadLine(); 
@@ -22,34 +21,41 @@ namespace TicTac
 			Player p2 = new Player(name_p2); 
 			p2.Create(); 
 
+			string stop = ""; 
 			do { 
 
 				try { 
 					
 					p1.Print(); 
 					Console.WriteLine("Player One's Turn"); 
-					Console.WriteLine("Which position would you like:"); 
+					Console.Write("Which position would you like:"); 
 					int pos = Convert.ToInt32(Console.ReadLine()); 
 					Console.WriteLine("\n"); 
-					p1.UpdateBoard(pos); 
+					p1.movesPlayed.Add(pos); 
+					p1.UpdateBoard(pos, val); 
 
 					Console.WriteLine("Player Two's Turn"); 
-					Console.WriteLine("Which position would you like:"); 
+					Console.Write("Which position would you like:"); 
 					pos = Convert.ToInt32(Console.ReadLine()); 
 					Console.WriteLine("\n"); 
-					p2.UpdateBoard(pos); 
+					p2.movesPlayed.Add(pos); 
+					p2.UpdateBoard(pos, val); 
+
+
+					if (p1.movesPlayed.Count > 3 ||  p2.movesPlayed.Count > 3 )  
+						break; 
 
 					Console.WriteLine("\n"); 
 					Console.WriteLine("Continue? Yes or No"); 
-					string stop = Console.ReadLine(); 
-
+					stop = Console.ReadLine().ToLower(); 
 
 				} 
 				catch (Exception e) { 
 						Console.WriteLine(e.Message); 
 				} 
+
 			} 
-			while (stop.Equals("Yes")); 
+			while (stop.StartsWith("yes")); 
 
 			Console.WriteLine("\n"); 
 

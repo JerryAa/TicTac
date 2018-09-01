@@ -27,6 +27,9 @@ namespace TicTac
 	
 		public string[,] Board = new string [ROW, COL]; 
 
+		public List<int> movesPlayed = new List<int>(); 
+		public List<List<int> > ChangeNumTo2D = new List<List<int>>(); 
+
 		// Create board 
 		public string [,] Create(){  
 			int count = 0; 
@@ -53,31 +56,10 @@ namespace TicTac
 			Console.WriteLine("\n"); 
 		
 		} 
-		
-
-	} 
-
-	public class Player : Game, Status 
-	{ 
-		// player data ie, name, x or o, etc
-
-		private string _name; 
-		public List<int> movesPlayed = new List<int>(); 
-		public List<List<int> > ChangeNumTo2D = new List<List<int>>(); 
-
-			
-
-		public Player(string nm) 
-		{
-
-			this._name = nm; 
-			Builder(); // adds to dictionary int position and array of row and column 
-		} 
 
 		public void Builder()
 		{ 
 			List<int [] > temp = new List< int [] >(); 
-
 			List<int> arr = new List<int>(3); 	
 
 			for(int r = 0; r < ROW; r++) { 
@@ -86,22 +68,24 @@ namespace TicTac
 					arr.Add(c); 	
 					ChangeNumTo2D.Add(arr); 
 					arr = new List<int>();  //reset 
-
 				} 
 			}  
-			
-
 		} 
 
-		public void UpdateBoard(int position)
-		// public void UpdateBoard(int position, Plyr p)
+		public void UpdateBoard(int position, Plyr p)
 		{ 
 			movesPlayed.Add(position); 
 			int [] location = Conversion(position); 
-			
-			Board[location[0], location[1]] = "X"; 
+			Console.WriteLine((int)p); 
+			var player = (int) p; 	
 
-			// Board[r,c] = "O"; 
+			if (player == 1) { 
+				Board[location[0], location[1]] = "X"; 
+			} 
+			else { 
+				Board[location[0], location[1]] = "0"; 
+			} 
+
 			Print(); 
 		} 
 
@@ -113,7 +97,6 @@ namespace TicTac
 			row = ChangeNumTo2D[pos][0]; 
 			col = ChangeNumTo2D[pos][1]; 
 
-
 			// Console.WriteLine("Line After Conversion row = {0} col = {1} ", row, col);  
 			
 			arr[0] = row; 
@@ -121,6 +104,20 @@ namespace TicTac
 
 			return arr; 
 		} 	
+		
+
+	} 
+
+	public class Player : Game, Status 
+	{ 
+		// player data ie, name, x or o, etc
+		private string _name; 
+			
+		public Player(string nm) 
+		{
+			this._name = nm; 
+			Builder(); // adds to dictionary int position and array of row and column 
+		} 
 
 		public bool IsWinner() 
 		{ 
