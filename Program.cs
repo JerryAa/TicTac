@@ -55,7 +55,7 @@ namespace TicTac
 				} 
 
 			} 
-			while (stop.StartsWith("yes")); 
+			while (stop.StartsWith("y")); 
 
 			Console.WriteLine("\n"); 
 
