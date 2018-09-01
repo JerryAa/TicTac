@@ -46,6 +46,7 @@ namespace TicTac
 		} 
 
 		public void Print() 
+		// print board 
 		{ 
 			for(int r = 0; r < ROW; r++) { 
 				for(int c = 0 ; c < COL; c++) { 
@@ -54,6 +55,11 @@ namespace TicTac
 				Console.WriteLine("\n"); 
 			} 
 			Console.WriteLine("\n"); 
+
+
+			foreach (var x in movesPlayed) { 
+				Console.WriteLine(x); 
+			} 
 		
 		} 
 
@@ -76,14 +82,14 @@ namespace TicTac
 		{ 
 			movesPlayed.Add(position); 
 			int [] location = Conversion(position); 
-			Console.WriteLine((int)p); 
-			var player = (int) p; 	
+
+			int player = (int) p; 	
 
 			if (player == 1) { 
-				Board[location[0], location[1]] = "X"; 
+				Board[location[0], location[1]] = "[X]"; 
 			} 
-			else { 
-				Board[location[0], location[1]] = "0"; 
+			else if (player == 2) { 
+				Board[location[0], location[1]] = "[0]"; 
 			} 
 
 			Print(); 
