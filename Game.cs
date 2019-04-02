@@ -1,4 +1,5 @@
 using System; 
+using System.Linq; 
 using System.Collections.Generic; 
 
 namespace TicTac
@@ -31,7 +32,7 @@ namespace TicTac
 		public List<List<int> > ChangeNumTo2D = new List<List<int>>(); 
 
 		// Create board 
-		public string [,] Create(){  
+		public string[,] Create(){  
 			int count = 0; 
 
 			for(int r = 0; r < ROW; r++) { 
@@ -111,25 +112,101 @@ namespace TicTac
 			return arr; 
 		} 	
 		
-
 	} 
 
 	public class Player : Game, Status 
 	{ 
 		// player data ie, name, x or o, etc
-		private string _name; 
+		private string _p1_name; 
+		private string _p2_name; 
 			
-		public Player(string nm) 
+		public Player(string p1, string p2) 
 		{
-			this._name = nm; 
+			this._p1_name = p1; 
+			this._p2_name = p2; 
 			Builder(); // adds to dictionary int position and array of row and column 
 		} 
 
 		public bool IsWinner() 
 		{ 
-			return false; 
-		} 
+            int r = 0, c = 0; 
 
+            // 1 - 3
+            List<string> moves = new List<string>(); 
+             
+            while(r < Board.GetLength(0)) 
+            { 
+                for (int col = 0; col < Board.GetLength(1); col++) 
+                { 
+                    moves.Add(Board[r,col]); 
+                } 
+                if (moves.Distinct().Count() == 1) 
+                { 
+                    if (moves.Distinct().ToList()[0] != "0") 
+                        return true; 
+                } 
+                moves.Clear(); 
+                r += 1; 
+            } 
+            Console.WriteLine("passed 1-3"); 
+
+            moves.Clear(); 
+
+            // 4 - 6 
+            r = 0; 
+            while(r < Board.GetLength(0)) 
+            { 
+                for (int col = 0; col < Board.GetLength(1); col++) 
+                { 
+                    moves.Add(Board[col, r]);  
+                } 
+                 
+                if (moves.Distinct().Count() == 1) 
+                { 
+                    if (moves.Distinct().ToList()[0] != "0")  
+                        return true; 
+                } 
+                moves.Clear(); 
+                r += 1; 
+            } 
+
+            moves.Clear(); 
+            /** 
+            Console.WriteLine("passed 4-6"); 
+
+            // 7 diagnol1 winning diagnol 
+            for (int diagnol = 0; diagnol< Board.GetLength(0); diagnol++)
+                moves.Add(Board[diagnol,diagnol]); 
+
+            if (moves.Distinct().Count() == 1) 
+                if (!moves.Distinct().ToList().Contains(0)) 
+                    return moves.Distinct().ToList()[0]; 
+                     
+            moves.Clear(); 
+            Console.WriteLine("passed 7"); 
+
+            // 8 diagnol2 winning diagnol 
+            d = Board.GetLength(0); 
+
+            for (int diagnol = 0; diagnol< Board.GetLength(0); diagnol++)
+            { 
+                d -= 1; 
+                moves.Add(Board[diagnol,d]); 
+            } 
+
+            if (moves.Distinct().Count() == 1)
+                if (!moves.Distinct().ToList().Contains(0)) 
+                    return moves.Distinct().ToList()[0]; 
+
+            Console.WriteLine("passed 8"); 
+
+            for row in Board: 
+                if 0 in row: 
+                    return -1 // Board not finished 
+            return 0 //draw 
+            **/ 
+            return true; 
+        } 
 	
 	} 
 
