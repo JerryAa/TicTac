@@ -41,7 +41,6 @@ namespace TicTac
 					count += 1; 
 				} 
 			} 
-
 			
 			return Board; 
 		} 
@@ -94,6 +93,7 @@ namespace TicTac
 			} 
 
 			Print(); 
+		    IsWinner(); 
 		} 
 
 		public int [] Conversion(int pos){
@@ -104,33 +104,15 @@ namespace TicTac
 			row = ChangeNumTo2D[pos][0]; 
 			col = ChangeNumTo2D[pos][1]; 
 
-			// Console.WriteLine("Line After Conversion row = {0} col = {1} ", row, col);  
-			
 			arr[0] = row; 
 			arr[1] = col; 
 
 			return arr; 
-		} 	
-		
-	} 
-
-	public class Player : Game, Status 
-	{ 
-		// player data ie, name, x or o, etc
-		private string _p1_name; 
-		private string _p2_name; 
-			
-		public Player(string p1, string p2) 
-		{
-			this._p1_name = p1; 
-			this._p2_name = p2; 
-			Builder(); // adds to dictionary int position and array of row and column 
 		} 
 
 		public bool IsWinner() 
 		{ 
             int r = 0, c = 0; 
-
             // 1 - 3
             List<string> moves = new List<string>(); 
              
@@ -171,7 +153,6 @@ namespace TicTac
             } 
 
             moves.Clear(); 
-            /** 
             Console.WriteLine("passed 4-6"); 
 
             // 7 diagnol1 winning diagnol 
@@ -179,14 +160,20 @@ namespace TicTac
                 moves.Add(Board[diagnol,diagnol]); 
 
             if (moves.Distinct().Count() == 1) 
-                if (!moves.Distinct().ToList().Contains(0)) 
-                    return moves.Distinct().ToList()[0]; 
+            { 
+                List<string> tmp = new List<string>(moves.Distinct().ToList());
+                if (!tmp.Contains("0")) 
+                { 
+                    // return moves.Distinct().ToList()[0]; 
+                    return true; 
+                } 
+            } 
                      
             moves.Clear(); 
             Console.WriteLine("passed 7"); 
 
             // 8 diagnol2 winning diagnol 
-            d = Board.GetLength(0); 
+            int d = Board.GetLength(0); 
 
             for (int diagnol = 0; diagnol< Board.GetLength(0); diagnol++)
             { 
@@ -195,19 +182,44 @@ namespace TicTac
             } 
 
             if (moves.Distinct().Count() == 1)
-                if (!moves.Distinct().ToList().Contains(0)) 
-                    return moves.Distinct().ToList()[0]; 
+            { 
+                List<string> tmp = new List<string>(moves.Distinct().ToList());
+                if (!tmp.Contains("0")) 
+                    return true; 
+                    // return moves.Distinct().ToList()[0]; 
+            } 
 
             Console.WriteLine("passed 8"); 
+            /** 
 
             for row in Board: 
                 if 0 in row: 
                     return -1 // Board not finished 
             return 0 //draw 
             **/ 
-            return true; 
+            foreach(var row in Board) 
+            { 
+                Console.WriteLine(row); 
+            } 
+            return false; 
         } 
-	
+		
+		
+	} 
+
+	public class Player : Game, Status 
+	{ 
+		// player data ie, name, x or o, etc
+		private string _p1_name; 
+		private string _p2_name; 
+			
+		public Player(string p1, string p2) 
+		{
+			this._p1_name = p1; 
+			this._p2_name = p2; 
+			Builder(); // adds to dictionary int position and array of row and column 
+		} 
+
 	} 
 
 
