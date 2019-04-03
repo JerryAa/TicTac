@@ -15,103 +15,83 @@ namespace TicTac
 	{ 
 
 		// signatures of game state methods 
-		bool IsWinner(); 
+		int IsWinner(); 
 
 	} 
-	public abstract class Game 
-	{ 
-		
+	 public abstract class Game
+    { 
+        const int ROW = 3; 
+        const int COL = 3; 
 
-		// Game methods, fields, board etc 
-		public const int ROW = 3; 
-		public const int COL = 3; 
-	
-		public string[,] Board = new string [ROW, COL]; 
+        public string[,] Board = new string [ROW, COL];
+        public List<List<int> > ChangeNumTo2D = new List<List<int>>();
 
-		public List<int> movesPlayed = new List<int>(); 
-		public List<List<int> > ChangeNumTo2D = new List<List<int>>(); 
+        public string[,] Create(){
+            int count = 0;
 
-		// Create board 
-		public string[,] Create(){  
-			int count = 0; 
+            for(int r = 0; r < ROW; r++) {
+                for(int c = 0; c < COL; c++) {
+                    Board[r,c] = count.ToString();
+                    // count += 1;
+                }
+            }
 
-			for(int r = 0; r < ROW; r++) { 
-				for(int c = 0; c < COL; c++) { 
-					Board[r,c] = count.ToString(); 
-					count += 1; 
-				} 
-			} 
-			
-			return Board; 
-		} 
+            return Board;
+        }
 
-		public void Print() 
-		// print board 
+        public void Builder()
+        {
+            List<int [] > temp = new List< int [] >();
+            List<int> arr = new List<int>(3);
+
+            for(int r = 0; r < ROW; r++) {
+                for(int c = 0 ; c < COL; c++) {
+                    arr.Add(r);
+                    arr.Add(c);
+                    ChangeNumTo2D.Add(arr);
+                    arr = new List<int>();  //reset 
+                }
+            }
+        }
+
+        public void UpdateBoard(int position, Plyr p)
+        {
+            int [] location = Conversion(position);
+
+            int player = (int) p;
+
+            if (player == 1) {
+                Board[location[0], location[1]] = "[X]";
+            }
+            else if (player == 2) {
+                Board[location[0], location[1]] = "[O]";
+            }
+
+            Print();
+        }
+
+        public int [] Conversion(int pos){
+            int [] arr = new int[2]; // will return row and col
+            int row = 0;
+            int col = 0;
+
+            row = ChangeNumTo2D[pos][0];
+            col = ChangeNumTo2D[pos][1];
+
+            arr[0] = row;
+            arr[1] = col;
+
+            return arr;
+        }
+
+        public int IsWinner() 
 		{ 
-			for(int r = 0; r < ROW; r++) { 
-				for(int c = 0 ; c < COL; c++) { 
-					Console.Write($"{Board[r,c]} \t "); 
-				} 
-				Console.WriteLine("\n"); 
-			} 
-			Console.WriteLine("\n"); 
-
-
-			foreach (var x in movesPlayed) { 
-				Console.WriteLine(x); 
-			} 
-		
-		} 
-
-		public void Builder()
-		{ 
-			List<int [] > temp = new List< int [] >(); 
-			List<int> arr = new List<int>(3); 	
-
-			for(int r = 0; r < ROW; r++) { 
-				for(int c = 0 ; c < COL; c++) { 
-					arr.Add(r); 	
-					arr.Add(c); 	
-					ChangeNumTo2D.Add(arr); 
-					arr = new List<int>();  //reset 
-				} 
-			}  
-		} 
-
-		public void UpdateBoard(int position, Plyr p)
-		{ 
-			movesPlayed.Add(position); 
-			int [] location = Conversion(position); 
-
-			int player = (int) p; 	
-
-			if (player == 1) { 
-				Board[location[0], location[1]] = "[X]"; 
-			} 
-			else if (player == 2) { 
-				Board[location[0], location[1]] = "[0]"; 
-			} 
-
-			Print(); 
-		    IsWinner(); 
-		} 
-
-		public int [] Conversion(int pos){
-			int [] arr = new int[2]; // will return row and col 
-			int row = 0; 
-			int col = 0; 
-		
-			row = ChangeNumTo2D[pos][0]; 
-			col = ChangeNumTo2D[pos][1]; 
-
-			arr[0] = row; 
-			arr[1] = col; 
-
-			return arr; 
-		} 
-
-		public bool IsWinner() 
-		{ 
+            /** 
+                return 
+                    0 - draw 
+                    10 - not finished 
+                    1 - finished 
+            **/ 
             int r = 0, c = 0; 
             // 1 - 3
             List<string> moves = new List<string>(); 
@@ -125,12 +105,11 @@ namespace TicTac
                 if (moves.Distinct().Count() == 1) 
                 { 
                     if (moves.Distinct().ToList()[0] != "0") 
-                        return true; 
+                        return 1; 
                 } 
                 moves.Clear(); 
                 r += 1; 
             } 
-            Console.WriteLine("passed 1-3"); 
 
             moves.Clear(); 
 
@@ -146,14 +125,13 @@ namespace TicTac
                 if (moves.Distinct().Count() == 1) 
                 { 
                     if (moves.Distinct().ToList()[0] != "0")  
-                        return true; 
+                        return 1; 
                 } 
                 moves.Clear(); 
                 r += 1; 
             } 
 
             moves.Clear(); 
-            Console.WriteLine("passed 4-6"); 
 
             // 7 diagnol1 winning diagnol 
             for (int diagnol = 0; diagnol< Board.GetLength(0); diagnol++)
@@ -165,12 +143,11 @@ namespace TicTac
                 if (!tmp.Contains("0")) 
                 { 
                     // return moves.Distinct().ToList()[0]; 
-                    return true; 
+                    return 1; 
                 } 
             } 
                      
             moves.Clear(); 
-            Console.WriteLine("passed 7"); 
 
             // 8 diagnol2 winning diagnol 
             int d = Board.GetLength(0); 
@@ -185,27 +162,34 @@ namespace TicTac
             { 
                 List<string> tmp = new List<string>(moves.Distinct().ToList());
                 if (!tmp.Contains("0")) 
-                    return true; 
+                    return 1; 
                     // return moves.Distinct().ToList()[0]; 
             } 
+            moves.Clear(); 
 
-            Console.WriteLine("passed 8"); 
-            /** 
 
-            for row in Board: 
-                if 0 in row: 
-                    return -1 // Board not finished 
-            return 0 //draw 
-            **/ 
-            foreach(var row in Board) 
+            foreach(var elemnt in Board) 
             { 
-                Console.WriteLine(row); 
+                if (elemnt == "0") 
+                { 
+                    return -10; // Board not finished 
+                } 
+                    
             } 
-            return false; 
+            return 0; // Draw 
         } 
-		
-		
-	} 
+
+        public void Print()
+        {
+            for(int r = 0; r < ROW; r++) {
+                for(int c = 0 ; c < COL; c++) {
+                    Console.Write($"{Board[r,c]} \t");
+                }
+                Console.WriteLine("\n");
+            }
+            Console.WriteLine("\n");
+        } 
+    } 
 
 	public class Player : Game, Status 
 	{ 
